@@ -7,6 +7,16 @@
 <div id="clients">
   <% @clients.each do |client| %>
     <%= render client %>
+
+    <p>
+      <!-- Verificar si el cliente tiene una película arrendada -->
+      <% if client.movie.present? %>
+        <strong>Película arrendada:</strong> <%= client.movie.name %>
+      <% else %>
+        <strong>Película arrendada:</strong> Ninguna
+      <% end %>
+    </p>
+
     <p>
       <%= link_to "Show this client", client %>
     </p>

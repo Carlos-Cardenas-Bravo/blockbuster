@@ -1,15 +1,16 @@
-<div id="<%= dom_id movie %>">
-    <div>
-      <p>
-        <strong>Name:</strong>
-        <%= movie.name %>
-        <strong>Clientes</strong>
-      <% movie.clients.each do |client| %>
-        <span><%= client.name %> </span>
-      <% end %>
-      </p>
+<div id="<%= dom_id movie %>" class="box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+          <p>
+            <strong>Name:</strong>
+            <%= movie.name %>
+            <strong>Clientes</strong>
+          <% movie.clients.each do |client| %>
+            <span><%= client.name %> </span>
+          <% end %>
+          </p>
+      </div>
     </div>
-  </div>
-
-
+  </article>
 </div>

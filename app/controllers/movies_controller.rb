@@ -19,6 +19,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/1/edit
   def edit
+    @clients = @movie.clients  # carga los clientes asociados a la película
   end
 
   # POST /movies or /movies.json
@@ -40,9 +41,10 @@ class MoviesController < ApplicationController
   def update
     respond_to do |format|
       if @movie.update(movie_params)
-        format.html { redirect_to @movie, notice: "Movie was successfully updated." }
+        format.html { redirect_to @movie, notice: "Película y cliente asociado fueron exitosamente actualizados." }
         format.json { render :show, status: :ok, location: @movie }
       else
+        @clients = @movie.clients  # Si hay error, vuelve a cargar la lista de clientes
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @movie.errors, status: :unprocessable_entity }
       end

@@ -1,6 +1,6 @@
 <%= form_with(model: client) do |form| %>
   <% if client.errors.any? %>
-    <div style="color: red">
+  <div class="notification is-danger">
       <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
 
       <ul>
@@ -11,17 +11,23 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="field">
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <div class="control">
+      <%= form.text_field :name %>
+    </div>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :age, style: "display: block" %>
-    <%= form.number_field :age %>
+    <div class="control">
+      <%= form.number_field :age %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="field">
+    <div class="control">
+      <%= form.submit %>
+    </div>
   </div>
 <% end %>

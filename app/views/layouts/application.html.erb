@@ -15,9 +15,145 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+        <!-- Menú de Navegación -->
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://web.archive.org/web/20080721032605/http://www.blockbuster.cl/">
+              <div>
+                <%= image_tag 'blockbuster.png', alt: 'Blockbuster', width: '100', height: '50' %>
+              </div>
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item">
+                Películas
+              </a>
+
+              <a class="navbar-item">
+                Clientes
+              </a>
+
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                  Opciones
+                </a>
+
+                <div class="navbar-dropdown">
+                  <a class="navbar-item">
+                    Nosotros
+                  </a>
+                  <a class="navbar-item is-selected">
+                    Historia
+                  </a>
+                  <a class="navbar-item">
+                    Contacto
+                  </a>
+                  <hr class="navbar-divider">
+                  <a class="navbar-item">
+                    Reclamo
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a class="button is-primary">
+                    <strong>Sign up</strong>
+                  </a>
+                  <a class="button is-light">
+                    Log in
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+    </header>
+
+
+
+      <div class="columns">
+        <div class="column is-one-quarter">
+          <div class="menu">
+            <p class="menu-label">BUSCAR</p>
+            <ul class="menu-list">
+              <li><a href="#">Búsqueda Avanzada</a></li>
+            </ul>
+
+            <p class="menu-label">ESTRENOS</p>
+            <ul class="menu-list">
+              <li><a href="#">Ver >></a></li>
+            </ul>
+
+            <p class="menu-label">PRONTO AQUÍ</p>
+            <ul class="menu-list">
+              <li><a href="#">Ver >></a></li>
+            </ul>
+
+            <p class="menu-label">PELÍCULAS A LA VENTA</p>
+            <ul class="menu-list">
+              <li><a href="#">Acción</a></li>
+              <li><a href="#">Comedia</a></li>
+              <li><a href="#">Familiar</a></li>
+              <li><a href="#">Drama</a></li>
+            </ul>
+
+            <p class="menu-label">INFORMACIÓN</p>
+            <ul class="menu-list">
+              <li><a href="#">Nuestra Compañía</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Columna principal -->
+        <div class="column">
+          <% if flash[:notice] %>
+            <div class="notification is-success">
+                <%= flash[:notice] %>
+            </div>
+          <% end %>
+
+          <% if flash[:alert] %>
+            <div class="notification is-danger">
+                <%= flash[:alert] %>
+            </div>
+          <% end %>
+
+          <%= yield %> <!-- Esto cargará el contenido principal -->
+
+        </div>
+      </div>
+
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
+          The source code is licensed
+          <a href="https://opensource.org/license/mit">MIT</a>. The
+          website content is licensed
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
+            >CC BY NC SA 4.0</a
+          >.
+        </p>
+      </div>
+    </footer>
+
   </body>
 </html>

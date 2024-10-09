@@ -1,6 +1,6 @@
 <%= form_with(model: movie) do |form| %>
   <% if movie.errors.any? %>
-    <div style="color: red">
+  <div class="notification is-danger">
       <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
 
       <ul>
@@ -11,25 +11,40 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="field">
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <div class="control">
+      <%= form.text_field :name %>
+    </div>
   </div>
 
+  <h3>Clientes que han arrendado esta película</h3>
   <div>
-    <%= form.submit %>
+    <%= form.fields_for :clients do |client_form| %>
+      <div class="field">
+        <%= client_form.label :name, style: "display: block" %>
+        <div class="control">
+          <%= client_form.text_field :name %>
+        </div>
+      </div>
+      <div class="field">
+        <%= client_form.label :age, style: "display: block" %>
+        <div class="control">
+          <%= client_form.text_field :age %>
+        </div>
+      </div>
+      <div class="field">
+        <%= client_form.check_box :_destroy %>
+        <div class="control">
+          <%= client_form.label :_destroy, "eliminar Cliente" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <%= form.submit %>
+    </div>
   </div>
 <% end %>
-
-<h3>Clientes</h3>
-<div>
-    <%= form.fields_for :clients do |client| %>
-      <%= client.label :name, style: "display: block" %>
-      <%= client.text_field :name %>
-      <%= client.label :age, style: "display: block" %>
-      <%= client.text_field :age %>
-      <br>
-      <%= client.check_box :_destroy %>
-      <%= client.label :_destroy, "Borrar" %>
-    <% end %>
-</div>
