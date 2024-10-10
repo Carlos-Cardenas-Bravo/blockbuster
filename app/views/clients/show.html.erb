@@ -5,9 +5,10 @@
 
     <div class="mt-4">
       <div class="buttons">
-        <%= link_to "Edit this client", edit_client_path(@client), class: "button is-warning" %>
-        <%= link_to "Back to clients", clients_path, class: "button is-light" %>
-        <%= button_to "Destroy this client", @client, method: :delete, class: "button is-danger" %>
+        <%= link_to "Arrendar Película", assign_movie_client_path(@client), class: "button is-light" %>
+        <%= link_to "Editar", edit_client_path(@client), class: "button is-warning" %>
+        <%= link_to "Volver a Clientes", clients_path, class: "button is-light" %>
+        <%= button_to "Eliminar", @client, method: :delete, class: "button is-danger" %>
       </div>
     </div>
 

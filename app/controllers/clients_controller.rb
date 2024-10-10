@@ -75,6 +75,47 @@ class ClientsController < ApplicationController
     end
   end
 
+  # Muestra el formulario para asignar una película a un cliente existente
+  def assign_movie
+    @client = Client.find(params[:id])
+    @movies = Movie.all # Cargar todas las películas para la vista
+
+    if @client.movie.present?
+      flash.now[:alert] = "El cliente ya tiene una película asignada."
+      render :assign_movie and return
+    end
+
+    # Verifica si los parámetros están presentes
+    if params[:client].present? && params[:client][:movie_id].present?
+      # Aquí puedes continuar con la lógica de asignación
+    else
+      flash.now[:alert] = "Por favor, selecciona una película para asignar."
+      render :assign_movie and return
+    end
+  end
+
+  # Procesa la asignación de la película al cliente
+  def update_movie
+    @client = Client.find(params[:id])
+
+    logger.debug "Received parameters: #{params.inspect}"
+
+    if params[:client].present? && params[:client][:movie_id].present?
+      @client.movie_id = params[:client][:movie_id]
+
+      if @client.save
+        redirect_to @client, notice: 'Película asignada exitosamente al cliente.'
+      else
+        @movies = Movie.all
+        flash.now[:alert] = "Hubo un problema al asignar la película."
+        render :assign_movie, status: :unprocessable_entity
+      end
+    else
+      flash.now[:alert] = "Por favor, selecciona una película para asignar."
+      render :assign_movie and return
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
@@ -83,6 +124,6 @@ class ClientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:name, :age)
+      params.require(:client).permit(:name, :age, :movie_id)
     end
 end

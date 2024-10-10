@@ -20,12 +20,10 @@
         <div class="mb-4"> <!-- Contenedor para cada cliente -->
           <%= render client %>
           <div class="mt-2"> <!-- Margen superior para el botón -->
-            <%= link_to "Show this client", client, class: "button is-primary" %>
-          </div>
         </div>
       <% end %>
     </div>
-
-    <%= link_to "New client", new_client_path, class: "button is-primary" %>
   </div>
 </section>
+
+<%== pagy_nav(@pagy) if @pagy.pages > 1 %>

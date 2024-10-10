@@ -2,7 +2,7 @@
 <section class="section">
   <div class="container">
 
-    <h1 class="title">Movies</h1>
+    <h1 class="title">Películas</h1>
     <!-- Buscador -->
     <%= form_with url: movies_path, method: :get, local: true do |form| %>
         <div class="field has-addons">
@@ -19,7 +19,6 @@
         <%= render movie %>
       <% end %>
     </div>
-    <%= link_to "New movie", new_movie_path, class: "button is-primary" %>
   </div>
 </section>
 

@@ -37,6 +37,27 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
 
+    # Verificamos si se seleccionó un cliente para asignar la película
+    if params[:movie][:client_id].present?
+      @client = Client.find(params[:movie][:client_id])
+
+      # Si el cliente ya tiene una película asignada, mostramos un mensaje de error
+      if @client.movie.present?
+        respond_to do |format|
+          format.html {
+            flash.now[:alert] = "Este cliente ya tiene una película asignada."
+            render :new
+          }
+          format.json { render json: { error: "Este cliente ya tiene una película asignada." }, status: :unprocessable_entity }
+        end
+        return
+      else
+          # Asignamos la película al cliente
+          @client.update(movie: @movie)
+      end
+    end
+
+    # Guardamos la película si pasa las validaciones
     respond_to do |format|
       if @movie.save
         format.html { redirect_to @movie, notice: "Película creada exitosamente." }
@@ -47,6 +68,8 @@ class MoviesController < ApplicationController
       end
     end
   end
+
+
 
   # PATCH/PUT /movies/1 or /movies/1.json
   def update
@@ -88,7 +111,7 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:name, clients_attributes: [:id, :name, :age, :_destroy])
+      params.require(:movie).permit(:name)
 
     end
 end

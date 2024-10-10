@@ -1,42 +1,21 @@
 <%= form_with(model: movie, local: true) do |form| %>
-  <% if movie.errors.any? %>
-    <div class="notification is-danger">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
-      <ul>
-        <% movie.errors.full_messages.each do |error| %>
-          <li><%= error %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <div class="control">
       <%= form.text_field :name, class: "input", placeholder: "Nombre de la película" %>
     </div>
   </div>
 
-  <h3 class="title is-4">Asignar la película a un cliente</h3>
-  <div>
-    <%= form.fields_for :clients do |client_form| %>
-      <div class="field">
-        <div class="control">
-          <%= client_form.text_field :name, class: "input", placeholder: "Nombre del cliente" %>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <%= client_form.text_field :age, class: "input", placeholder: "Edad del cliente" %>
-        </div>
-      </div>
-
-    <% end %>
+  <h2 class="title is-5" style="display: inline;">Asignar cliente a la película</h2>
+  <div class="field">
+    <div class="control">
+      <%= form.collection_select :client_id, Client.where(movie_id: nil), :id, :name, { prompt: "Seleccionar Cliente" }, class: "input" %>
+    </div>
   </div>
-  <br>
+
   <div class="field">
     <div class="control">
       <%= form.submit "Guardar Película", class: "button is-primary" %>
     </div>
   </div>
 <% end %>
+

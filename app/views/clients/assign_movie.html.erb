@@ -1,0 +1,26 @@
+<br>
+<br>
+<h1 class="title">Asignar Película</h1>
+<%= form_with(model: @client, url: assign_movie_client_path(@client), local: true, method: :patch) do |form| %>
+  <div class="field">
+    <h2 class="title is-6">Cliente</h2>
+    <div class="control">
+      <%= form.collection_select :id, Client.all, :id, :name, { prompt: "Seleccionar Cliente" }, class: "input", disabled: true %>
+      <!-- Cliente ya seleccionado, solo mostramos su nombre -->
+    </div>
+  </div>
+
+  <div class="field">
+    <h2 class="title is-6">Seleccionar Película</h2>
+    <div class="control">
+      <%= form.collection_select :movie_id, @movies, :id, :name, { prompt: "Seleccionar Película" }, class: "input" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <%= form.submit "Asignar Película", class: "button is-primary" %>
+    </div>
+  </div>
+<% end %>
+
