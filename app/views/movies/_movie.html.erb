@@ -3,12 +3,12 @@
     <div class="media-content">
       <div class="content">
         <h2 class="title is-4"><%= movie.name %></h2>
-        <%= link_to "Show this movie", movie_path(movie.id), class: "button is-light" %>
-        <h3 class="subtitle is-6">Clientes que han arrendado:</h3>
+        <%= link_to "Mostrar la Película", movie_path(movie.id), class: "button is-light" %>
         <p>
+          <h3 class="subtitle is-6" style="display: inline;">Clientes que han arrendado:</h3>
           <% if movie.clients.any? %>
             <% movie.clients.each do |client| %>
-              <span class="tag is-info"><%= client.name %></span>
+              <span><%= client.name %></span>
             <% end %>
           <% else %>
             <span>No hay clientes registrados.</span>

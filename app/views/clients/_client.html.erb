@@ -2,13 +2,13 @@
   <article class="media">
     <div class="media-content">
       <div class="content">
+        <h2 class="title is-4"><%= client.name %></h2>
+        <%= link_to "Mostrar el Cliente", client_path(client.id), class: "button is-light" %>
         <p>
-          <strong>Nombre:</strong>
-          <%= client.name %>
+          <h3 class="subtitle is-6" style="display: inline;">Edad:</h3>
+          <span><%= client.age %></span>
+        </p>
           <br>
-          <strong>Edad:</strong>
-          <%= client.age %>
-          <br><br>
           <strong>Película arrendada: </strong>
           <% if client.movie.present? %>
             <%= client.movie.name %>

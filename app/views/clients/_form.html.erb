@@ -11,14 +11,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name, class: "label" %>
     <div class="control">
       <%= form.text_field :name, class: "input", placeholder: "Nombre del cliente" %>
     </div>
   </div>
 
   <div class="field">
-    <%= form.label :age, class: "label" %>
     <div class="control">
       <%= form.number_field :age, class: "input", placeholder: "Edad del cliente" %>
     </div>
@@ -26,7 +24,7 @@
 
   <div class="field">
     <div class="control">
-      <%= form.submit "Guardar Cliente", class: "button is-primary" %> <!-- Estilo del botón -->
+      <%= form.submit "Guardar Cliente", class: "button is-primary" %>
     </div>
   </div>
 <% end %>

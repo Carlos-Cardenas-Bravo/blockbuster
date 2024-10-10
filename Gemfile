@@ -59,3 +59,5 @@ end
 gem "faker", "~> 3.4"
 
 gem "pagy", "~> 9.1"
+
+gem "pg_search", "~> 2.3"

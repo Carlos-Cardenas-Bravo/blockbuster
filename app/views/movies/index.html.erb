@@ -3,7 +3,17 @@
   <div class="container">
 
     <h1 class="title">Movies</h1>
-
+    <!-- Buscador -->
+    <%= form_with url: movies_path, method: :get, local: true do |form| %>
+        <div class="field has-addons">
+            <div class="control">
+                <%= form.text_field :query_text, placeholder: "Buscar película...", value: params[:query_text], class: "input" %>
+            </div>
+            <div class="control">
+                <%= submit_tag "Buscar", class: "button is-primary" %>
+            </div>
+        </div>
+    <% end %>
     <div id="movies" class="mt-4">
       <% @movies.each do |movie| %>
         <%= render movie %>

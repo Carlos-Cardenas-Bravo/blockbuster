@@ -3,8 +3,18 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
-    @pagy, @movies = pagy(Movie.all)
+    if params[:query_text].present?
+      # Realiza la búsqueda con paginación
+      @pagy, @movies = pagy(Movie.search_full_text(params[:query_text]))
+      # Si no se encuentran películas, muestra un mensaje y redirige a la lista completa
+      if @movies.empty?
+        flash[:alert] = "No se encontraron películas que coincidan con la búsqueda."
+        redirect_to movies_path and return
+      end
+    else
+      # Si no hay búsqueda, lista todos los tweets con paginación
+      @pagy, @movies = pagy(Movie.all)
+    end
   end
 
   # GET /movies/1 or /movies/1.json
@@ -29,7 +39,7 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       if @movie.save
-        format.html { redirect_to @movie, notice: "Movie was successfully created." }
+        format.html { redirect_to @movie, notice: "Película creada exitosamente." }
         format.json { render :show, status: :created, location: @movie }
       else
         format.html { render :new, status: :unprocessable_entity }

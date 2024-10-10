@@ -3,7 +3,18 @@ class ClientsController < ApplicationController
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.all
+    if params[:query_text].present?
+      # Realiza la búsqueda con paginación
+      @pagy, @clients = pagy(Client.search_full_text(params[:query_text]))
+      # Si no se encuentran clientes, muestra un mensaje y redirige a la lista completa
+      if @clients.empty?
+        flash[:alert] = "No se encontraron clientes que coincidan con la búsqueda."
+        redirect_to clients_path and return
+      end
+    else
+      # Si no hay búsqueda, lista todos los tweets con paginación
+      @pagy, @clients = pagy(Client.all)
+    end
   end
 
   # GET /clients/1 or /clients/1.json
@@ -25,7 +36,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: "Client was successfully created." }
+        format.html { redirect_to @client, notice: "Client creado exitosamente." }
         format.json { render :show, status: :created, location: @client }
       else
         format.html { render :new, status: :unprocessable_entity }

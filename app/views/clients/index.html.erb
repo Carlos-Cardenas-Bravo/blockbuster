@@ -4,7 +4,17 @@
   <div class="container">
 
     <h1 class="title">Clientes</h1>
-
+    <!-- Buscador -->
+    <%= form_with url: clients_path, method: :get, local: true do |form| %>
+        <div class="field has-addons">
+            <div class="control">
+                <%= form.text_field :query_text, placeholder: "Buscar cliente...", value: params[:query_text], class: "input" %>
+            </div>
+            <div class="control">
+                <%= submit_tag "Buscar", class: "button is-primary" %>
+            </div>
+        </div>
+    <% end %>
     <div id="clients" class="mt-4">
       <% @clients.each do |client| %>
         <div class="mb-4"> <!-- Contenedor para cada cliente -->
