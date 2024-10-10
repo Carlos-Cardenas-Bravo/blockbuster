@@ -3,21 +3,13 @@
 
     <%= render @client %>
 
-        <p>
     <div class="mt-4">
-        <!-- Verificar si el cliente tiene una película arrendada -->
-        <% if @client.movie.present? %>
-          <strong>Película arrendada:</strong> <%= @client.movie.name %>
-        <% else %>
-          <strong>Película arrendada:</strong> Ninguna
-        <% end %>
-        </p>
-
-
-        <%= link_to "Edit this client", edit_client_path(@client) %> |
-        <%= link_to "Back to clients", clients_path %>
-
-        <%= button_to "Destroy this client", @client, method: :delete %>
+      <div class="buttons">
+        <%= link_to "Edit this client", edit_client_path(@client), class: "button is-warning" %>
+        <%= link_to "Back to clients", clients_path, class: "button is-light" %>
+        <%= button_to "Destroy this client", @client, method: :delete, class: "button is-danger" %>
+      </div>
     </div>
+
   </div>
 </section>

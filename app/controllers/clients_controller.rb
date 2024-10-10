@@ -38,7 +38,7 @@ class ClientsController < ApplicationController
   def update
     respond_to do |format|
       if @client.update(client_params)
-        format.html { redirect_to @client, notice: "Client was successfully updated." }
+        format.html { redirect_to @client, notice: "Cliente actualizado exitosamente." }
         format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,11 +49,18 @@ class ClientsController < ApplicationController
 
   # DELETE /clients/1 or /clients/1.json
   def destroy
-    @client.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to clients_path, status: :see_other, notice: "Client was successfully destroyed." }
-      format.json { head :no_content }
+    @client = Client.find(params[:id])
+    if @client.movie.present?
+      respond_to do |format|
+        format.html { redirect_to clients_path, alert: "No se puede eliminar el cliente porque tiene una película asociada." }
+        format.json { render json: { error: "No se puede eliminar el cliente porque tiene una película asociada." }, status: :unprocessable_entity }
+      end
+    else
+      @client.destroy!
+      respond_to do |format|
+        format.html { redirect_to clients_path, status: :see_other, notice: "Cliente eliminado exitosamente." }
+        format.json { head :no_content }
+      end
     end
   end
 

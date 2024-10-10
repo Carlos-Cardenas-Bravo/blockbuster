@@ -1,33 +1,32 @@
-<%= form_with(model: client) do |form| %>
+<%= form_with(model: client, local: true) do |form| %>
   <% if client.errors.any? %>
-  <div class="notification is-danger">
+    <div class="notification is-danger">
       <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
-
       <ul>
-        <% client.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% client.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name, class: "label" %>
     <div class="control">
-      <%= form.text_field :name %>
+      <%= form.text_field :name, class: "input", placeholder: "Nombre del cliente" %>
     </div>
   </div>
 
   <div class="field">
-    <%= form.label :age, style: "display: block" %>
+    <%= form.label :age, class: "label" %>
     <div class="control">
-      <%= form.number_field :age %>
+      <%= form.number_field :age, class: "input", placeholder: "Edad del cliente" %>
     </div>
   </div>
 
   <div class="field">
     <div class="control">
-      <%= form.submit %>
+      <%= form.submit "Guardar Cliente", class: "button is-primary" %> <!-- Estilo del botón -->
     </div>
   </div>
 <% end %>

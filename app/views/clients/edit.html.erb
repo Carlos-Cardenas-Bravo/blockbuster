@@ -9,8 +9,10 @@
     <br>
 
     <div class="mt-4">
-      <%= link_to "Show this client", @client %> |
-      <%= link_to "Back to clients", clients_path %>
+      <div class="buttons">
+        <%= link_to "Show this client", @client, class: "button is-info" %>
+        <%= link_to "Back to clients", clients_path, class: "button is-light" %>
+      </div>
     </div>
   </div>
 </section>

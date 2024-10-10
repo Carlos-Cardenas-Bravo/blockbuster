@@ -1,26 +1,21 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Clients" %>
 
-<h1>Clients</h1>
+<section class="section">
+  <div class="container">
 
-<div id="clients">
-  <% @clients.each do |client| %>
-    <%= render client %>
+    <h1 class="title">Clientes</h1>
 
-    <p>
-      <!-- Verificar si el cliente tiene una película arrendada -->
-      <% if client.movie.present? %>
-        <strong>Película arrendada:</strong> <%= client.movie.name %>
-      <% else %>
-        <strong>Película arrendada:</strong> Ninguna
+    <div id="clients" class="mt-4">
+      <% @clients.each do |client| %>
+        <div class="mb-4"> <!-- Contenedor para cada cliente -->
+          <%= render client %>
+          <div class="mt-2"> <!-- Margen superior para el botón -->
+            <%= link_to "Show this client", client, class: "button is-primary" %>
+          </div>
+        </div>
       <% end %>
-    </p>
+    </div>
 
-    <p>
-      <%= link_to "Show this client", client %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New client", new_client_path %>
+    <%= link_to "New client", new_client_path, class: "button is-primary" %>
+  </div>
+</section>

@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
+    @pagy, @movies = pagy(Movie.all)
   end
 
   # GET /movies/1 or /movies/1.json
@@ -53,11 +54,19 @@ class MoviesController < ApplicationController
 
   # DELETE /movies/1 or /movies/1.json
   def destroy
-    @movie.destroy!
+    @movie = Movie.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to movies_path, status: :see_other, notice: "Movie was successfully destroyed." }
-      format.json { head :no_content }
+    if @movie.clients.any?
+      respond_to do |format|
+        format.html { redirect_to movies_path, alert: "No se puede eliminar la película porque está asociada a un cliente." }
+        format.json { render json: { error: "No se puede eliminar la película porque está asociada a un cliente." }, status: :unprocessable_entity }
+      end
+    else
+      @movie.destroy!
+      respond_to do |format|
+        format.html { redirect_to movies_path, status: :see_other, notice: "Película eliminada exitosamente." }
+        format.json { head :no_content }
+      end
     end
   end
 

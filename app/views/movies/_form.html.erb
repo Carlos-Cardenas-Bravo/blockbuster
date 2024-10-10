@@ -1,50 +1,42 @@
-<%= form_with(model: movie) do |form| %>
+<%= form_with(model: movie, local: true) do |form| %>
   <% if movie.errors.any? %>
-  <div class="notification is-danger">
+    <div class="notification is-danger">
       <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
-
       <ul>
-        <% movie.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% movie.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :name, style: "display: block" %>
     <div class="control">
-      <%= form.text_field :name %>
+      <%= form.text_field :name, class: "input", placeholder: "Nombre de la película" %>
     </div>
   </div>
 
-  <h3>Clientes que han arrendado esta película</h3>
+  <h3 class="title is-4">Asignar la película a un cliente</h3>
   <div>
     <%= form.fields_for :clients do |client_form| %>
       <div class="field">
-        <%= client_form.label :name, style: "display: block" %>
         <div class="control">
-          <%= client_form.text_field :name %>
+          <%= client_form.text_field :name, class: "input", placeholder: "Nombre del cliente" %>
         </div>
       </div>
+
       <div class="field">
-        <%= client_form.label :age, style: "display: block" %>
         <div class="control">
-          <%= client_form.text_field :age %>
+          <%= client_form.text_field :age, class: "input", placeholder: "Edad del cliente" %>
         </div>
       </div>
-      <div class="field">
-        <%= client_form.check_box :_destroy %>
-        <div class="control">
-          <%= client_form.label :_destroy, "eliminar Cliente" %>
-        </div>
-      </div>
+
     <% end %>
   </div>
-
+  <br>
   <div class="field">
     <div class="control">
-      <%= form.submit %>
+      <%= form.submit "Guardar Película", class: "button is-primary" %>
     </div>
   </div>
 <% end %>

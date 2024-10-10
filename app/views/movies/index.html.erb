@@ -7,12 +7,10 @@
     <div id="movies" class="mt-4">
       <% @movies.each do |movie| %>
         <%= render movie %>
-        <p>
-          <%= link_to "Show this movie", movie %>
-        </p>
       <% end %>
     </div>
-
-    <%= link_to "New movie", new_movie_path %>
+    <%= link_to "New movie", new_movie_path, class: "button is-primary" %>
   </div>
 </section>
+
+<%== pagy_nav(@pagy) if @pagy.pages > 1 %>

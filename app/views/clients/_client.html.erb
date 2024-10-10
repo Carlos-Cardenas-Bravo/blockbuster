@@ -3,13 +3,18 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>Name:</strong>
+          <strong>Nombre:</strong>
           <%= client.name %>
-        </p>
-
-        <p>
-          <strong>Age:</strong>
+          <br>
+          <strong>Edad:</strong>
           <%= client.age %>
+          <br><br>
+          <strong>Película arrendada: </strong>
+          <% if client.movie.present? %>
+            <%= client.movie.name %>
+          <% else %>
+            Ninguna
+          <% end %>
         </p>
       </div>
     </div>
