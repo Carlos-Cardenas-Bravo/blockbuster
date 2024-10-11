@@ -77,47 +77,72 @@ class ClientsController < ApplicationController
 
   # Muestra el formulario para asignar una película a un cliente existente
   def assign_movie
+
+    puts "Parámetros recibidos: #{params.inspect}"
+
     @client = Client.find(params[:id])
-    @movies = Movie.all # Cargar todas las películas para la vista
+    @movies = Movie.all # carga todas las películas para la vista
 
     if @client.movie.present?
       flash.now[:alert] = "El cliente ya tiene una película asignada."
       render :assign_movie and return
     end
 
-    # Verifica si los parámetros están presentes
-    if params[:client].present? && params[:client][:movie_id].present?
-      # Aquí puedes continuar con la lógica de asignación
+# se actualiza el cliente con la peli seleccionada
+    if @client.update(client_params)
+
+      puts "Película asignada: #{@client.movie_id}"
+
+      flash[:notice] = "Película asignada correctamente."
+      redirect_to @client # redirijo a la página del cliente
     else
-      flash.now[:alert] = "Por favor, selecciona una película para asignar."
-      render :assign_movie and return
+      flash.now[:alert] = "No se pudo asignar la película. Inténtalo de nuevo."
+      render :assign_movie
     end
   end
 
-  # Procesa la asignación de la película al cliente
-  def update_movie
-    @client = Client.find(params[:id])
+# Procesa la asignación de la película al cliente
+#  def update_movie
+#
+#    puts "Parámetros recibidos: #{params.inspect}"
 
-    logger.debug "Received parameters: #{params.inspect}"
+#    @client = Client.find(params[:id])
 
-    if params[:client].present? && params[:client][:movie_id].present?
-      @client.movie_id = params[:client][:movie_id]
+#    puts "cliente encontrado: #{@client.id}"
 
-      if @client.save
-        redirect_to @client, notice: 'Película asignada exitosamente al cliente.'
-      else
-        @movies = Movie.all
-        flash.now[:alert] = "Hubo un problema al asignar la película."
-        render :assign_movie, status: :unprocessable_entity
-      end
-    else
-      flash.now[:alert] = "Por favor, selecciona una película para asignar."
-      render :assign_movie and return
-    end
-  end
+#    if params[:client][:movie_id].present?
+#     @client.movie_id = params[:client][:movie_id]
+
+#   if client_params[:movie_id].present?
+#      @client.movie_id = client_params[:movie_id]
+
+#    if params[:client].present? && params[:client][:movie_id].present?
+#      @client.movie_id = params[:client][:movie_id]  # Asigna la película al cliente
+
+#      puts "Película asignada: #{@client.movie_id}"
+
+#      if @client.save
+
+#        puts "Película guardada exitosamente: #{@client.movie_id}"
+
+#        redirect_to @client, notice: 'Película asignada exitosamente al cliente.'
+#      else
+
+#      puts "Error al guardar la película: #{@client.errors.full_messages.join(", ")}"
+
+#        @movies = Movie.all
+#        flash.now[:alert] = "Hubo un problema al asignar la película."
+#        render :assign_movie, status: :unprocessable_entity
+#      end
+#    else
+#      flash.now[:alert] = "Por favor, selecciona una película para asignar."
+#      @movies = Movie.all
+#      render :assign_movie and return
+#    end
+#  end
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_client
       @client = Client.find(params[:id])
     end
@@ -125,5 +150,6 @@ class ClientsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def client_params
       params.require(:client).permit(:name, :age, :movie_id)
+      #params.require(:client).permit(:movie_id)
     end
 end
