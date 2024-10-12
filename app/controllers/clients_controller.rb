@@ -147,9 +147,8 @@ class ClientsController < ApplicationController
       @client = Client.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:name, :age, :movie_id)
-      #params.require(:client).permit(:movie_id)
+      #params.require(:client).permit(:name, :age, :movie_id)
+      params.require(:client).permit(:movie_id)
     end
 end
